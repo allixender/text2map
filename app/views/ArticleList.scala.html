@@ -1,0 +1,30 @@
+@(articleList: List[models.Article])
+
+<ul>
+    @{var counter = 1}
+    @for(article <- articleList) {
+        <li>
+            <ul>
+                <li>
+                    @article.articleid
+                </li>
+                <li>
+                    <a href="@article.arturl">@article.journal</a>
+                </li>
+                <li>
+                    @article.year
+                </li>
+                <li>
+                    @article.author
+                </li>
+                <li>
+                    @article.title
+                </li>
+                <li>
+                    <a href="/edit/@article.articleid">map/edit</a>
+                </li>
+            </ul>
+        </li>
+    }
+</ul>
+

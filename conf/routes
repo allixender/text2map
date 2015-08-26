@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+# more analytics
+GET        /                         controllers.CassandraCtl.index
+GET        /list                     controllers.CassandraCtl.listArticles
+GET        /edit/:articleid          controllers.CassandraCtl.mapEditArticlesById(articleid: Long)
+
+GET        /datalint/lintonce        controllers.DataLint.lintOnce
+
+# Map static resources from the /public folder to the /assets URL path
+GET        /webjars/*file            controllers.WebJarAssets.at(file)
+GET        /assets/*file             controllers.Assets.at(path="/public", file)
+GET        /versioned/*file          controllers.Assets.versioned(path="/public", file: Asset)
