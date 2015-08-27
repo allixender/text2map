@@ -1,0 +1,32 @@
+@(article: models.Article)
+
+
+<ul>
+    <li>
+        @article.articleid
+    </li>
+    <li>
+        <a href="@article.arturl">@article.journal</a>
+    </li>
+    <li>
+    @article.year
+    </li>
+    <li>
+    @article.author
+    </li>
+    <li>
+    @article.title
+    </li>
+    <li>
+        <a href="/edit/@article.articleid">map/edit</a>
+    </li>
+</ul>
+
+    <hr>
+
+    <br>
+
+<textarea rows="50" cols="100">
+@article.fulltext
+</textarea>
+

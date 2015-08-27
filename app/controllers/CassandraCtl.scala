@@ -33,7 +33,7 @@ object CassandraCtl extends Controller {
     allArticles.map {
       artList =>
         logger.info(s"got ${artList.length} elements")
-        Ok(views.html.ArticleList(artList))
+        Ok(views.html.FullArticle(artList.head))
     }
   }
 }
