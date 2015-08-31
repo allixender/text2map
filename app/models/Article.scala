@@ -3,13 +3,11 @@ package models
 import com.datastax.driver.core.DataType._
 import com.datastax.driver.core.Row
 import com.datastax.driver.core.querybuilder.QueryBuilder
-import com.datastax.driver.core.querybuilder.QueryBuilder.{ eq => ceq }
+import com.datastax.driver.core.querybuilder.QueryBuilder.{eq => ceq}
 import com.datastax.driver.core.schemabuilder.SchemaBuilder
-
-import play.api.Play.current
-import scala.concurrent.Future
-
 import service.{CFKeys, ConfigCassandraCluster}
+
+import scala.concurrent.Future
 
 case class Article(
   articleid: Long,
@@ -25,10 +23,10 @@ case class Article(
 
 object Article extends ConfigCassandraCluster {
 
-  import play.api.libs.concurrent.Execution.Implicits._
-  import scala.collection.JavaConversions._
-  import scala.collection.JavaConverters
   import cassandra.resultset._
+  import play.api.libs.concurrent.Execution.Implicits._
+
+  import scala.collection.JavaConversions._
   import scala.language.implicitConversions
 
   lazy val session = cluster.connect(CFKeys.playCassandra)

@@ -24,5 +24,6 @@ object CFKeys {
   val playCassandra = cassandraConfig.get.getString("keyspace").get
   val articles = "articles"
   val linzgeo = "linzgeo"
+  val geomatch = "geomatch"
   val metaxml = "metaxml"
 }

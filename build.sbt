@@ -13,17 +13,13 @@ val geotoolsVersion = "13.1"
 libraryDependencies ++= Seq(
   cache,
   ws,
-  "org.webjars" %% "webjars-play" % "2.3.0-3",
-  "org.webjars" % "polymer" % "1.0.8",
-  "org.webjars" % "bootstrap" % "3.1.1-2",
-  "org.webjars" % "openlayers" % "3.8.2",
   "org.jsoup" % "jsoup" % "1.7.2",
   "com.vividsolutions" % "jts" % "1.13",
   "com.datastax.cassandra" % "cassandra-driver-core" % "2.1.5" exclude("org.xerial.snappy", "snappy-java"),
   "org.xerial.snappy"       	% "snappy-java"           % "1.1.1.7"
 )
 
-pipelineStages := Seq(rjs, digest, gzip)
+pipelineStages := Seq(digest, gzip)
 		
 resolvers += "smart releases" at "http://dev.smart-project.info/artifactory/libs-release/"
 

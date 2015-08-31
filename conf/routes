@@ -5,13 +5,20 @@
 # Home page
 
 # more analytics
-GET        /                         controllers.CassandraCtl.index
-GET        /list                     controllers.CassandraCtl.listArticles
-GET        /edit/:articleid          controllers.CassandraCtl.mapEditArticlesById(articleid: Long)
+GET        /                               controllers.CassandraCtl.index
+GET        /list                           controllers.CassandraCtl.listArticles
+GET        /edit/:articleid                controllers.CassandraCtl.mapEditArticlesById(articleid: Long)
 
-GET        /datalint/lintonce        controllers.DataLint.lintOnce
+# API JSON
+GET        /api/articles                   controllers.ApiCtl.allArticles
+GET        /api/articles/:articleid        controllers.ApiCtl.articleById(articleid: Long)
+GET        /api/matches/:matchid         controllers.ApiCtl.getMatchesForArticle(matchid: Long)
+GET        /api/geonames                   controllers.ApiCtl.getAllGeoNames
+GET        /api/geonames/:name_id          controllers.ApiCtl.getGeoNameById(name_id: Long)
+
+GET        /datalint/lintonce              controllers.DataLint.lintOnce
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /webjars/*file            controllers.WebJarAssets.at(file)
-GET        /assets/*file             controllers.Assets.at(path="/public", file)
-GET        /versioned/*file          controllers.Assets.versioned(path="/public", file: Asset)
+# GET        /webjars/*file            controllers.WebJarAssets.at(file)
+GET        /assets/*file                   controllers.Assets.at(path="/public", file)
+GET        /versioned/*file                controllers.Assets.versioned(path="/public", file: Asset)
