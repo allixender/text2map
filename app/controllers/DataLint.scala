@@ -9,6 +9,9 @@ object DataLint extends Controller {
 
   val JOHNZ = "New Zealand Journal of Hydrology"
   val MARINE = "New Zealand Journal of Marine and Freshwater Research"
+  val GEOLOGY = "New Zealand Journal of Geology and Geophysics"
+
+  val journals = List(JOHNZ, MARINE, GEOLOGY)
 
   def lintJOHNZurls(url: String) : String = {
     // TODO add baseurl to Article URL number
@@ -69,6 +72,60 @@ object DataLint extends Controller {
             logger.info(s"linting ${linted.articleid}")
         }
         Ok(views.html.index(s"got ${artList.length} elements for linting, please check the log"))
+    }
+  }
+
+  def redeemArticles = Action.async {
+
+    val allArticles = Article.getAllF
+
+    allArticles.map {
+      artList =>
+        logger.info(s"redeem ru ngot ${artList.length} elements")
+        artList.foreach {
+          art =>
+            val a1 = art.articleid
+
+            val a2 = journals.contains(art.journal)
+            val a3 = art.authortitle != null
+            val a4 = art.textabs != null
+            val a5 = art.author != null
+            val a6 = art.title != null
+
+            val a7 = !(art.year == 0)
+
+            val a8 = art.arturl != null && !art.arturl.isEmpty
+            logger.debug(art.arturl)
+
+            val a9 = art.fulltext != null
+
+            if (!a2) {
+              logger.warn(s"check journal ${a1} ${art.journal}")
+            }
+            if (!a3) {
+              logger.warn(s"check authortitle ${a1}")
+            }
+            if (!a4) {
+              logger.warn(s"check textabs ${a1} ")
+            }
+            if (!a5) {
+              logger.warn(s"check author ${a1}")
+            }
+            if (!a6) {
+              logger.warn(s"check title ${a1}")
+            }
+            if (!a7) {
+              logger.warn(s"check year ${a1}")
+            }
+            if (!a8) {
+              logger.warn(s"check arturl ${a1}")
+            }
+            if (!a9) {
+              logger.warn(s"check fulltext ${a1}")
+            }
+        }
+
+        Ok(views.html.index("redeem run, check log"))
     }
   }
 }

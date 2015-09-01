@@ -1,28 +1,17 @@
 package controllers
 
-import java.util.UUID
-
-import org.joda.time.DateTime
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.libs.json.{Writes, JsPath, Reads}
-import play.api.libs.ws._
+import models.{Article, GeoMatch, GeoName}
 import play.api.Logger._
-import play.api.mvc.{Action, Controller}
-import play.api.cache._
-import models.{GeoMatch, GeoName, Article}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json.Writes._
-import play.api.libs.json._
-
-import scala.concurrent.Future
+import play.api.libs.json.{JsPath, Reads, Writes, _}
+import play.api.mvc.{Action, Controller}
 
 object ApiCtl extends Controller {
 
 
   import play.api.libs.concurrent.Execution.Implicits.defaultContext
-  import scala.collection.JavaConverters._
 
   // TODO, we might need different case classes for send and receive messages
   // particularly because of UUID generation/handling
@@ -114,10 +103,14 @@ object ApiCtl extends Controller {
       logger.info(s"got ${geomatches.size} elements")
 
       val jsonList = geomatches.map { singleMatch =>
-        val jsonArray = Json.toJson(singleMatch.geonames.asScala)
+        val jsonArray1 = Json.toJson(singleMatch.titlematch)
+        val jsonArray2 = Json.toJson(singleMatch.abstractmatch)
+        val jsonArray3 = Json.toJson(singleMatch.fulltextmatch)
         val jsonObject = Json.obj(
           "articleid" -> JsNumber(singleMatch.articleid),
-          "geonames" -> jsonArray
+          "titlematch" -> jsonArray1,
+          "abstractmatch" -> jsonArray2,
+          "fulltextmatch" -> jsonArray3
         )
         jsonObject
       }

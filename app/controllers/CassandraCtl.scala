@@ -12,6 +12,7 @@ object CassandraCtl extends Controller {
 
   import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
+
   def index = Action {
     Ok(views.html.index("Text2Map article georeferencing experiment"))
   }
