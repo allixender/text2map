@@ -95,6 +95,28 @@ object ApiCtl extends Controller {
     }
   }
 
+  def getAbstractPlainText(articleid: Long) = Action.async {
+
+    val allArticles = Article.getByIdF(articleid)
+    allArticles.map {
+      artList =>
+        logger.info(s"got ${artList.length} elements")
+
+        Ok(artList.head.textabs).as("text/plain")
+    }
+  }
+
+  def getFullPlainText(articleid: Long) = Action.async {
+
+    val allArticles = Article.getByIdF(articleid)
+    allArticles.map {
+      artList =>
+        logger.info(s"got ${artList.length} elements")
+
+        Ok(artList.head.textabs).as("text/plain")
+    }
+  }
+
   def getMatchesForArticle(matchid: Long) = Action.async {
 
     val allMatches = GeoMatch.getByIdF(matchid)

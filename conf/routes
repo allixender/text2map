@@ -12,6 +12,8 @@ GET        /edit/:articleid                controllers.CassandraCtl.mapEditArtic
 # API JSON
 GET        /api/articles                   controllers.ApiCtl.allArticles
 GET        /api/articles/:articleid        controllers.ApiCtl.articleById(articleid: Long)
+GET        /api/abstract/:articleid        controllers.ApiCtl.getAbstractPlainText(articleid: Long)
+GET        /api/fulltext/:articleid        controllers.ApiCtl.getFullPlainText(articleid: Long)
 GET        /api/matches/:matchid           controllers.ApiCtl.getMatchesForArticle(matchid: Long)
 GET        /api/geonames                   controllers.ApiCtl.getAllGeoNames
 GET        /api/geonames/:name_id          controllers.ApiCtl.getGeoNameById(name_id: Long)
