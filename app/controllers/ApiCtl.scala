@@ -15,11 +15,11 @@ object ApiCtl extends Controller {
 
   // TODO, we might need different case classes for send and receive messages
   // particularly because of UUID generation/handling
-  case class ArtJsIn(
-                      subject: String,
-                      message: String,
-                      usernamefrom: String,
-                      usernameto: String)
+  case class CheckSetJsIn(
+                           articleid: Long,
+                           artelement: String, // title, abstract, fulltext
+                           geonameid: Long,
+                           oknotok: Boolean)
 
   // no fulltext or abstract
   case class ArtMetadaJsOut(
@@ -31,11 +31,11 @@ object ApiCtl extends Controller {
                              year: Long,
                              arturl: String)
 
-  implicit val artJsReads: Reads[ArtJsIn] = (
-    (JsPath \ "subject").read[String] and
-      (JsPath \ "message").read[String] and
-      (JsPath \ "usernamefrom").read[String](minLength[String](3)) and
-      (JsPath \ "usernameto").read[String](minLength[String](3)))(ArtJsIn.apply _)
+  implicit val artJsReads: Reads[CheckSetJsIn] = (
+    (JsPath \ "articleid").read[Long] and
+      (JsPath \ "artelement").read[String] and
+      (JsPath \ "geonameid").read[Long] and
+      (JsPath \ "oknotok").read[Boolean])(CheckSetJsIn.apply _)
 
   implicit val artMetaJsWrites: Writes[ArtMetadaJsOut] = (
     (JsPath \ "articleid").write[Long] and
@@ -113,7 +113,7 @@ object ApiCtl extends Controller {
       artList =>
         logger.info(s"got ${artList.length} elements")
 
-        Ok(artList.head.textabs).as("text/plain")
+        Ok(artList.head.fulltext).as("text/plain")
     }
   }
 
@@ -163,6 +163,22 @@ object ApiCtl extends Controller {
 
         Ok(Json.toJson(geonames.head))
     }
+  }
+
+  // TODO
+  def safeCheckSet = Action(parse.json) { request =>
+
+    val checkSetIn = request.body.validate[CheckSetJsIn]
+
+    checkSetIn.fold(
+      errors => {
+        BadRequest(Json.obj("status" -> "ERR", "message" -> JsError.toFlatJson(errors)))
+      },
+      CheckSetJsIn => {
+        // safe in DB
+        Ok(Json.obj("status" -> "OK", "message" -> "done"))
+      })
+
   }
 
 }

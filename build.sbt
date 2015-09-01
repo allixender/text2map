@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
   ws,
   "org.jsoup" % "jsoup" % "1.7.2",
   "com.vividsolutions" % "jts" % "1.13",
+  "joda-time" % "joda-time" % "2.4",
   "com.datastax.cassandra" % "cassandra-driver-core" % "2.1.5" exclude("org.xerial.snappy", "snappy-java"),
   "org.xerial.snappy"       	% "snappy-java"           % "1.1.1.7"
 )

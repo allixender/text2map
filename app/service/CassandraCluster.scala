@@ -25,5 +25,6 @@ object CFKeys {
   val articles = "articles"
   val linzgeo = "linzgeo"
   val geomatch = "geomatch"
+  val checkset = "checkset"
   val metaxml = "metaxml"
 }
