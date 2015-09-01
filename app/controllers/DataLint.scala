@@ -3,7 +3,7 @@ package controllers
 import play.api.libs.ws._
 import play.api.Logger._
 import play.api.mvc.{Action, Controller}
-import models.Article
+import models.{GeoMatch, Article}
 
 object DataLint extends Controller {
 
@@ -127,5 +127,12 @@ object DataLint extends Controller {
 
         Ok(views.html.index("redeem run, check log"))
     }
+  }
+
+  def createSchemas = Action {
+
+    GeoMatch.createCassandraSchema
+
+    Ok(views.html.index("schemas run"))
   }
 }

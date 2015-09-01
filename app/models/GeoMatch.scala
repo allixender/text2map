@@ -33,9 +33,9 @@ object GeoMatch extends ConfigCassandraCluster {
   def createCassandraSchema = {
     val schema = SchemaBuilder.createTable(CFKeys.playCassandra, CFKeys.geomatch).ifNotExists()
       .addPartitionKey("articleid", bigint)
-      .addColumn("titlematch", com.datastax.driver.core.DataType.set(bigint))
-      .addColumn("abstractmatch", com.datastax.driver.core.DataType.set(bigint))
-      .addColumn("fulltextmatch", com.datastax.driver.core.DataType.set(bigint))
+      .addColumn("titlematch", com.datastax.driver.core.DataType.list(bigint))
+      .addColumn("abstractmatch", com.datastax.driver.core.DataType.list(bigint))
+      .addColumn("fulltextmatch", com.datastax.driver.core.DataType.list(bigint))
     session.execute(schema)
   }
 
