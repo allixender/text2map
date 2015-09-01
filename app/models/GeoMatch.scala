@@ -28,7 +28,7 @@ object GeoMatch extends ConfigCassandraCluster {
 
   lazy val session = cluster.connect(CFKeys.playCassandra)
 
-  val keysClass = com.google.common.reflect.TypeToken.of(Long.getClass)
+  val keysClass = com.google.common.reflect.TypeToken.of(com.datastax.driver.core.DataType.bigint().asJavaClass())
 
   def createCassandraSchema = {
     val schema = SchemaBuilder.createTable(CFKeys.playCassandra, CFKeys.geomatch).ifNotExists()
@@ -42,9 +42,9 @@ object GeoMatch extends ConfigCassandraCluster {
   def buildParser(row: Row): GeoMatch = {
 
     val articleid = row.getLong("articleid")
-    val titlematch: List[Long] = row.getSet("titlematch", keysClass).asInstanceOf[List[Long]]
-    val abstractmatch: List[Long] = row.getSet("abstractmatch", keysClass).asInstanceOf[List[Long]]
-    val fulltextmatch: List[Long] = row.getSet("fulltextmatch", keysClass).asInstanceOf[List[Long]]
+    val titlematch: List[Long] = row.getList("titlematch", keysClass).asInstanceOf[List[Long]]
+    val abstractmatch: List[Long] = row.getList("abstractmatch", keysClass).asInstanceOf[List[Long]]
+    val fulltextmatch: List[Long] = row.getList("fulltextmatch", keysClass).asInstanceOf[List[Long]]
 
     GeoMatch(articleid, titlematch.toIndexedSeq, abstractmatch.toIndexedSeq, fulltextmatch.toIndexedSeq)
   }
